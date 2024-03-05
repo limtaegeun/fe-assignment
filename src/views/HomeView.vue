@@ -3,6 +3,7 @@ import { onBeforeMount, ref } from 'vue'
 import TextFieldWithTitle from '@/components/forms/TextFieldWithTitle.vue'
 import { useAccountStore } from '@/stores/account'
 import { storeToRefs } from 'pinia'
+import { useRouter } from 'vue-router'
 
 const accountStore = useAccountStore()
 const { account } = storeToRefs(accountStore)
@@ -40,9 +41,11 @@ onBeforeMount(() => {
   }
 })
 
+const router = useRouter()
 function next() {
   if (isValid.value) {
     account.value = { email: email.value, password: password.value }
+    router.push('/address')
   } else {
     alert('입력값을 확인해주세요.')
   }
