@@ -9,6 +9,8 @@ const errorMsg = ref('')
 const router = useRouter()
 const accountStore = useAccountStore()
 const { account } = storeToRefs(accountStore)
+
+// region action
 function submit() {
   const msg = validateCardNumber(cardNumber.value)
   if (msg) {
@@ -19,6 +21,9 @@ function submit() {
     router.push('/complete')
   }
 }
+// endregion
+
+// region rules
 function validateCardNumber(cardNumber: string[]) {
   const cardNumberStr = cardNumber.join('')
   if (cardNumberStr.length < 16) {
@@ -74,6 +79,7 @@ function input(e: InputEvent) {
     }
   }
 }
+// endregion
 </script>
 
 <template>
