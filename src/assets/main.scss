@@ -28,9 +28,9 @@
   )
 );
 @import './base.css';
-
+@import "mixin";
 #app {
-  max-width: 1280px;
+  max-width: 600px;
   margin: 0 auto;
   padding: 2rem;
   font-weight: normal;
@@ -44,21 +44,15 @@ a,
   padding: 3px;
 }
 
+.form-label {
+   @include form-label;
+}
+
+
 @media (hover: hover) {
   a:hover {
     background-color: hsla(160, 100%, 37%, 0.2);
   }
 }
 
-@media (min-width: 1024px) {
-  body {
-    display: flex;
-    place-items: center;
-  }
 
-  #app {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    padding: 0 2rem;
-  }
-}
