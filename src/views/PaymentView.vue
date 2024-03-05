@@ -1,7 +1,45 @@
 <script setup lang="ts">
-import { computed, nextTick, ref, watch } from 'vue'
+import { nextTick, ref } from 'vue'
+import { useRouter } from 'vue-router'
 
 const cardNumber = ref(['', '', '', ''])
+const errorMsg = ref('')
+const router = useRouter()
+function submit() {
+  const msg = validateCardNumber(cardNumber.value)
+  if (msg) {
+    errorMsg.value = msg
+  } else {
+    errorMsg.value = ''
+    router.push('/complete')
+  }
+}
+function validateCardNumber(cardNumber: string[]) {
+  const cardNumberStr = cardNumber.join('')
+  if (cardNumberStr.length < 16) {
+    return '카드번호를 입력해주세요.'
+  } else if (cardNumberStr.length >= 16) {
+    const result = cardNumberStr.split('').reduceRight((acc, cur, idx) => {
+      if (idx % 2 !== 0) {
+        const num = Number(cur) * 2
+        if (num > 9) {
+          return acc + (Math.floor(num / 10) + (num % 10))
+        } else {
+          return acc + num
+        }
+      } else {
+        return acc + Number(cur)
+      }
+    }, 0)
+    console.log(result)
+    if (result % 10 === 0) {
+      return ''
+    } else {
+      return '카드번호가 올바르지 않습니다.'
+    }
+  }
+  return ''
+}
 
 function input(e: InputEvent) {
   // console.log(e)
@@ -69,7 +107,7 @@ function input(e: InputEvent) {
       />
     </div>
     <p v-show="errorMsg" class="text-red-600">{{ errorMsg }}</p>
-    <v-btn block class="mt-4" color="primary">완료</v-btn>
+    <v-btn block class="mt-4" color="primary" @click="submit">완료</v-btn>
   </main>
 </template>
 
