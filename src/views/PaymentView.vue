@@ -25,7 +25,7 @@ function validateCardNumber(cardNumber: string[]) {
     return '카드번호를 입력해주세요.'
   } else if (cardNumberStr.length >= 16) {
     const result = cardNumberStr.split('').reduceRight((acc, cur, idx) => {
-      if (idx % 2 !== 0) {
+      if (idx % 2 === 0) {
         const num = Number(cur) * 2
         if (num > 9) {
           return acc + (Math.floor(num / 10) + (num % 10))
