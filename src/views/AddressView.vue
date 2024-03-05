@@ -3,6 +3,7 @@ import TextFieldWithTitle from '@/components/forms/TextFieldWithTitle.vue'
 import { useAccountStore } from '@/stores/account'
 import { storeToRefs } from 'pinia'
 import { onBeforeMount, ref } from 'vue'
+import DaumAddress from '@/components/forms/DaumAddress.vue'
 
 const isValid = ref(false)
 const name = ref('')
@@ -23,6 +24,7 @@ onBeforeMount(() => {
     <v-form v-model="isValid">
       <text-field-with-title title="이름" v-model="name" />
       <text-field-with-title title="연락처" v-model="phone" />
+      <daum-address />
     </v-form>
   </main>
 </template>
