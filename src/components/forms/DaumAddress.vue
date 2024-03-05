@@ -58,6 +58,9 @@ async function showSearchView() {
 function updateAddr() {
   emit('update:modelValue', (addr1.value + ' ' + addr2.value).trim())
 }
+
+// rules
+const emptyRule = [(v: string) => !!v || '주소를 입력해주세요.']
 </script>
 
 <template>
@@ -70,7 +73,7 @@ function updateAddr() {
         <v-btn color="primary" @click="showSearchView">우편번호</v-btn>
       </div>
     </div>
-    <v-text-field v-model="addr1" readonly variant="outlined" />
+    <v-text-field v-model="addr1" readonly variant="outlined" :rules="emptyRule" />
     <v-text-field v-model="addr2" variant="outlined" @update:model-value="updateAddr()" />
     <div ref="searchEl" class="h-[500px]" v-show="isShowSearchEl"></div>
   </div>
