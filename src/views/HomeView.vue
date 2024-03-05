@@ -15,6 +15,28 @@ const password = ref('')
 const confirmPassword = ref('')
 const showPassword = ref(false)
 
+onBeforeMount(() => {
+  if (account.value) {
+    email.value = account.value.email ?? ''
+    password.value = account.value.password ?? ''
+    confirmPassword.value = account.value.password ?? ''
+  }
+})
+// region action
+const router = useRouter()
+function next() {
+  if (isValid.value) {
+    account.value = Object.assign(account.value ?? {}, {
+      email: email.value,
+      password: password.value
+    })
+    router.push('/address')
+  } else {
+    alert('입력값을 확인해주세요.')
+  }
+}
+// endregion
+// region rules
 // rules :email 형식
 const emailRules = [
   (v: string) => !!v || '이메일을 입력해주세요.',
@@ -33,26 +55,7 @@ const confirmPasswordRules = [
   (v: string) => !!v || '비밀번호를 입력해주세요.',
   (v: string) => v === password.value || '비밀번호가 일치하지 않습니다.'
 ]
-onBeforeMount(() => {
-  if (account.value) {
-    email.value = account.value.email ?? ''
-    password.value = account.value.password ?? ''
-    confirmPassword.value = account.value.password ?? ''
-  }
-})
-
-const router = useRouter()
-function next() {
-  if (isValid.value) {
-    account.value = Object.assign(account.value ?? {}, {
-      email: email.value,
-      password: password.value
-    })
-    router.push('/address')
-  } else {
-    alert('입력값을 확인해주세요.')
-  }
-}
+// endregion
 </script>
 
 <template>
