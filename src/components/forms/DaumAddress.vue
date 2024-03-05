@@ -7,6 +7,12 @@ declare global {
     daum: any
   }
 }
+defineProps<{
+  modelValue: string
+}>()
+const emit = defineEmits<{
+  'update:modelValue': [string]
+}>()
 
 const addr1 = ref('')
 const addr2 = ref('')
@@ -16,7 +22,7 @@ onBeforeMount(() => {
 })
 
 const isShowSearchEl = ref(false) // 찾기 화면 보이기 여부
-const searchEl = ref(null) // 찾기 화면 Element
+const searchEl = ref<HTMLElement | null>(null) // 찾기 화면 Element
 function initPostCode() {
   let postScript = document.createElement('script')
   postScript.setAttribute('src', '//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js')
@@ -33,6 +39,7 @@ function initPostCode() {
           // 사용자가 지번 주소를 선택했을 경우(J)
           addr1.value = data.jibunAddress
         }
+        updateAddr()
         isShowSearchEl.value = false
         window.scrollTo({ top: 0, behavior: 'smooth' })
       },
@@ -46,7 +53,10 @@ function initPostCode() {
 async function showSearchView() {
   isShowSearchEl.value = true
   await nextTick()
-  searchEl.value.scrollIntoView({ behavior: 'smooth', block: 'end' })
+  searchEl.value?.scrollIntoView({ behavior: 'smooth', block: 'end' })
+}
+function updateAddr() {
+  emit('update:modelValue', (addr1.value + ' ' + addr2.value).trim())
 }
 </script>
 
@@ -60,8 +70,8 @@ async function showSearchView() {
         <v-btn color="primary" @click="showSearchView">우편번호</v-btn>
       </div>
     </div>
-    <v-text-field v-model="addr1" variant="outlined" />
-    <v-text-field v-model="addr2" variant="outlined" />
+    <v-text-field v-model="addr1" readonly variant="outlined" />
+    <v-text-field v-model="addr2" variant="outlined" @update:model-value="updateAddr()" />
     <div ref="searchEl" class="h-[500px]" v-show="isShowSearchEl"></div>
   </div>
 </template>
