@@ -21,6 +21,7 @@ onBeforeMount(() => {
   initAddress()
 })
 
+// region init
 function initAddress() {
   if (props.initValue) {
     addr1.value = props.initValue.addr1
@@ -57,6 +58,9 @@ function initPostCode() {
     })
   }
 }
+// endregion
+
+// region action
 async function showSearchView() {
   isShowSearchEl.value = true
   await nextTick()
@@ -65,9 +69,10 @@ async function showSearchView() {
 function updateAddr() {
   emit('update', { addr1: addr1.value, addr2: addr2.value })
 }
-
-// rules
+// endregion
+// region rules
 const emptyRule = [(v: string) => !!v || '주소를 입력해주세요.']
+// endregion
 </script>
 
 <template>
