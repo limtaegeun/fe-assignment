@@ -36,6 +36,9 @@ npm run lint
 ### tailwindcss
 - css 프레임워크로, 빠른 css 스타일링을 위해 사용하였습니다.
 
+### scss
+- css 전처리기로, css를 더 효율적으로 작성하기 위해 사용하였습니다.
+
 ### axios
 - API 요청을 보내기 위해 사용하였습니다.
 
