@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { useAccountStore } from '@/stores/account'
 import { storeToRefs } from 'pinia'
-import type { CreateAccountDto } from '@/models/account'
 import { computed } from 'vue'
 
 const accountStore = useAccountStore()

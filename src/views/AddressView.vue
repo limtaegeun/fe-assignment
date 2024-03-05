@@ -63,7 +63,7 @@ const phoneRules = [
     <v-form ref="form" v-model="isValid">
       <text-field-with-title title="이름" v-model="name" :rules="nameRules" />
       <text-field-with-title title="연락처" v-model="phone" :rules="phoneRules" />
-      <daum-address :addr1="addr1" :addr2="addr2" @update="updateAddress" />
+      <daum-address :init-value="{ addr1: addr1, addr2: addr2 }" @update="updateAddress" />
       <div class="actions flex gap-2">
         <v-btn color="grey-lighten-3" class="flex-1" @click="router.back()">이전</v-btn>
         <v-btn color="primary" class="flex-1" :disabled="!isValid" @click="next">다음</v-btn>

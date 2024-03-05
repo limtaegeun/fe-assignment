@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { nextTick, onBeforeMount, ref } from 'vue'
-import { useRouter } from 'vue-router'
 
 declare global {
   interface Window {
@@ -8,8 +7,7 @@ declare global {
   }
 }
 const props = defineProps<{
-  addr1: string
-  addr2: string
+  initValue: { addr1: string; addr2: string }
 }>()
 const emit = defineEmits<{
   update: [{ addr1: string; addr2: string }]
@@ -24,8 +22,10 @@ onBeforeMount(() => {
 })
 
 function initAddress() {
-  if (props.addr1) addr1.value = props.addr1
-  if (props.addr2) addr2.value = props.addr2
+  if (props.initValue) {
+    addr1.value = props.initValue.addr1
+    addr2.value = props.initValue.addr2
+  }
 }
 
 const isShowSearchEl = ref(false) // 찾기 화면 보이기 여부
