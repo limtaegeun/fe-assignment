@@ -36,7 +36,6 @@ function validateCardNumber(cardNumber: string[]) {
         return acc + Number(cur)
       }
     }, 0)
-    console.log(result)
     if (result % 10 === 0) {
       return ''
     } else {
@@ -47,7 +46,6 @@ function validateCardNumber(cardNumber: string[]) {
 }
 
 function input(e: InputEvent) {
-  // console.log(e)
   const target = e.target as HTMLInputElement
   const index = Number(target.getAttribute('index'))
 
