@@ -22,6 +22,7 @@ onBeforeMount(() => {
     addr2.value = account.value.addr2 ?? ''
   }
 })
+// region action
 const router = useRouter()
 function next() {
   form.value?.validate()
@@ -41,7 +42,9 @@ function updateAddress(address: { addr1: string; addr2: string }) {
   addr1.value = address.addr1
   addr2.value = address.addr2
 }
+// endregion
 
+// region rules
 //rules: 이름
 const nameRules = [
   (v: string) => !!v || '이름을 입력해주세요.',
@@ -56,6 +59,7 @@ const phoneRules = [
     /^0\d{1,2}-\d{3,4}-\d{4}$|^0\d{1,2}\s\d{3,4}\s\d{4}$|^\d{10,11}$/.test(v) ||
     '전화번호 형식이 올바르지 않습니다.'
 ]
+// endregion
 </script>
 
 <template>
