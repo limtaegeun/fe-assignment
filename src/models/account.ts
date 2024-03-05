@@ -1,6 +1,7 @@
 export interface Account {
   name: string
-  address: string
+  addr1: string
+  addr2: string
   phone: string
   email: string
   password: string

@@ -10,24 +10,36 @@ const form = ref<{ validate: () => void } | null>(null)
 const isValid = ref(false)
 const name = ref('')
 const phone = ref('')
-const address = ref('')
+const addr1 = ref('')
+const addr2 = ref('')
 const accountStore = useAccountStore()
 const { account } = storeToRefs(accountStore)
 onBeforeMount(() => {
   if (account.value) {
-    name.value = account.value.email ?? ''
-    phone.value = account.value.password ?? ''
+    name.value = account.value.name ?? ''
+    phone.value = account.value.phone ?? ''
+    addr1.value = account.value.addr1 ?? ''
+    addr2.value = account.value.addr2 ?? ''
   }
 })
 const router = useRouter()
 function next() {
   form.value?.validate()
   if (isValid.value) {
-    account.value = { name: name.value, phone: phone.value, address: address.value }
+    account.value = Object.assign(account.value ?? {}, {
+      name: name.value,
+      phone: phone.value,
+      addr1: addr1.value,
+      addr2: addr2.value
+    })
     router.push('/payment')
   } else {
     alert('입력값을 확인해주세요.')
   }
+}
+function updateAddress(address: { addr1: string; addr2: string }) {
+  addr1.value = address.addr1
+  addr2.value = address.addr2
 }
 
 //rules: 이름
@@ -51,7 +63,7 @@ const phoneRules = [
     <v-form ref="form" v-model="isValid">
       <text-field-with-title title="이름" v-model="name" :rules="nameRules" />
       <text-field-with-title title="연락처" v-model="phone" :rules="phoneRules" />
-      <daum-address v-model="address" />
+      <daum-address :addr1="addr1" :addr2="addr2" @update="updateAddress" />
       <div class="actions flex gap-2">
         <v-btn color="grey-lighten-3" class="flex-1" @click="router.back()">이전</v-btn>
         <v-btn color="primary" class="flex-1" :disabled="!isValid" @click="next">다음</v-btn>

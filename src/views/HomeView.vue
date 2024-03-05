@@ -44,7 +44,10 @@ onBeforeMount(() => {
 const router = useRouter()
 function next() {
   if (isValid.value) {
-    account.value = { email: email.value, password: password.value }
+    account.value = Object.assign(account.value ?? {}, {
+      email: email.value,
+      password: password.value
+    })
     router.push('/address')
   } else {
     alert('입력값을 확인해주세요.')

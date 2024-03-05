@@ -7,11 +7,12 @@ declare global {
     daum: any
   }
 }
-defineProps<{
-  modelValue: string
+const props = defineProps<{
+  addr1: string
+  addr2: string
 }>()
 const emit = defineEmits<{
-  'update:modelValue': [string]
+  update: [{ addr1: string; addr2: string }]
 }>()
 
 const addr1 = ref('')
@@ -19,7 +20,13 @@ const addr2 = ref('')
 
 onBeforeMount(() => {
   initPostCode()
+  initAddress()
 })
+
+function initAddress() {
+  if (props.addr1) addr1.value = props.addr1
+  if (props.addr2) addr2.value = props.addr2
+}
 
 const isShowSearchEl = ref(false) // 찾기 화면 보이기 여부
 const searchEl = ref<HTMLElement | null>(null) // 찾기 화면 Element
@@ -56,7 +63,7 @@ async function showSearchView() {
   searchEl.value?.scrollIntoView({ behavior: 'smooth', block: 'end' })
 }
 function updateAddr() {
-  emit('update:modelValue', (addr1.value + ' ' + addr2.value).trim())
+  emit('update', { addr1: addr1.value, addr2: addr2.value })
 }
 
 // rules

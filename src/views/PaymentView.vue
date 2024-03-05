@@ -1,16 +1,21 @@
 <script setup lang="ts">
 import { nextTick, ref } from 'vue'
 import { useRouter } from 'vue-router'
+import { useAccountStore } from '@/stores/account'
+import { storeToRefs } from 'pinia'
 
 const cardNumber = ref(['', '', '', ''])
 const errorMsg = ref('')
 const router = useRouter()
+const accountStore = useAccountStore()
+const { account } = storeToRefs(accountStore)
 function submit() {
   const msg = validateCardNumber(cardNumber.value)
   if (msg) {
     errorMsg.value = msg
   } else {
     errorMsg.value = ''
+    account.value!.cardNumber = cardNumber.value.join('')
     router.push('/complete')
   }
 }
